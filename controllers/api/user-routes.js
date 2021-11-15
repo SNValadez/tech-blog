@@ -11,14 +11,14 @@ router.post("/login", (req, res) => {
       }
     }).then(dbUsDa => {
       if (!dbUsDa) {
-        res.status(400).json({ message: 'Cannot find user account!' });
+        res.status(400).json({ message: "Cannot find user account!" });
         return;
       }
   
       const validPassword = dbUsDa.checkPassword(req.body.password);
   
       if (!validPassword) {
-        res.status(400).json({ message: 'This password is incorrect!' });
+        res.status(400).json({ message: "This password is incorrect!" });
         return;
       }
   
@@ -27,7 +27,7 @@ router.post("/login", (req, res) => {
         req.session.username = dbUsDa.username;
         req.session.loggedIn = true;
     
-        res.json({ user: dbUsDa, message: 'Currently logged in!' });
+        res.json({ user: dbUsDa, message: "Currently logged in!" });
       });
     });
   });
@@ -60,3 +60,21 @@ router.post("/", (req, res) => {
     });
   });
 
+  router.delete("/user/:id", (req, res) => {
+    User.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(dbUsDa => {
+      if (!dbUsDa) {
+        res.status(404).json({ message: "Cannot find user with this id!" });
+        return;
+      }
+      res.json(dbUsDa);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+  });

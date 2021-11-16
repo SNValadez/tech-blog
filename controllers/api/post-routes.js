@@ -41,9 +41,11 @@ router.post("/", withAuth, (req, res) => {
         })
 
         .then((dbPoDa) => res.json(dbPoDa))
-        
+
         .catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });
 });
+
+module.exports = router;

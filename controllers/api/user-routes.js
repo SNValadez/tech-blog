@@ -32,7 +32,18 @@ router.post("/login", (req, res) => {
     });
   });
   
-
+  router.get('/', (req, res) => {
+    User.findAll({
+            attributes: {
+                exclude: ['password']
+            }
+        })
+        .then(dbUsDa => res.json(dbUsDa))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
 
 
 router.post("/", (req, res) => {

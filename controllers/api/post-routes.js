@@ -32,15 +32,16 @@ router.delete("/:id", withAuth, (req, res) => {
 });
 
 router.post("/", withAuth, (req, res) => {
-    console.log("initating creation");
+    console.log("--initating creation--");
 
     Post.create({
             title: req.body.title,
             content: req.body.post_content,
             user_id: req.session.user_id
         })
-        
+
         .then((dbPoDa) => res.json(dbPoDa))
+        
         .catch((err) => {
             console.log(err);
             res.status(500).json(err);
